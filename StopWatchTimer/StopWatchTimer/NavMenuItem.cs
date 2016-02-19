@@ -17,7 +17,7 @@ namespace StopWatchTimer
         public char SymbolAsChar
         {
             get
-            {
+            {      
                 return (char)this.Symbol;
             }
         }
