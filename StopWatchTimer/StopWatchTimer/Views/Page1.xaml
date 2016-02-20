@@ -4,13 +4,60 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StopWatchTimer.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:control="using:WinRTXamlToolkit.Controls"
+    xmlns:gage="using:WinRTXamlToolkit.Controls.WinRTXamlToolkit_Controls_Gauge_UWP_XamlTypeInfo"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+
+        <Style x:Key="TextBlockStyle1" TargetType="TextBlock"/>
+    </Page.Resources>
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Page.Background>
+    <Page.DataContext>
+        <local:ViewModel/>
+    </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-          EntranceNavigationTransitionInfo.IsTargetElement="True">
+          EntranceNavigationTransitionInfo.IsTargetElement="True" RequestedTheme="Dark">
 
-        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Page 1 Content"/>
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"  />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel BorderThickness="1" BorderBrush="Wheat" Height="Auto" Orientation="Horizontal" Margin="0,50,0,50" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center" RequestedTheme="Light" RenderTransformOrigin="0.5,0.5" Background="{ThemeResource ToggleSwitchHeaderDisabledForegroundThemeBrush}">
+                <StackPanel.RenderTransform>
+                    <CompositeTransform ScaleX="1.5"/>
+                </StackPanel.RenderTransform>
+
+
+                <TextBlock Margin="20,0,0,0" Text="{Binding Hour}" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource DigitalTextBlockStyle}" />
+                <TextBlock   Text=":"  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource DigitalTextBlockStyle}" ></TextBlock>
+                <TextBlock  Text="{Binding Minute}" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource DigitalTextBlockStyle}" />
+                <TextBlock  Text=": "  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource DigitalTextBlockStyle}" />
+                <TextBlock  Text="{Binding Second}" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource DigitalTextBlockStyle}" />
+                <TextBlock   Text=": "   HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource DigitalTextBlockStyle}" />
+                <TextBlock Margin="0,0,0,20"  Text="{Binding MiliSecond}"  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="30" Style="{StaticResource DigitalTextBlockStyle}" />
+            </StackPanel>
+            <!--<Button  Height="100" Width="100" Grid.Row="1" Style="{StaticResource ButtonStyle1}"></Button>-->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,0"  Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <AppBarButton x:Name="PlayPauseButton" Tag="play" Label="Play"  Click="PlayPauseButton_Click" Background="#FFB71818" Icon="Play" BorderThickness="4" RequestedTheme="Dark" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" >
+                    <AppBarButton.ContentTransitions>
+                        <TransitionCollection>
+                            <ReorderThemeTransition/>
+                        </TransitionCollection>
+                    </AppBarButton.ContentTransitions>
+                </AppBarButton>
+                <AppBarButton Icon="Stop" Label="Stop" Click="StopButton_Click" Background="#FFB71818" Margin="50,0,0,0" />
+            </StackPanel>
+
+        </Grid>
 
     </Grid>
 </Page>
